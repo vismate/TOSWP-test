@@ -6,8 +6,8 @@ on:
       - "main"
 
 jobs:
-  pre-release:
-    name: "Pre Release"
+  release:
+    name: "Publish new release"
     runs-on: "ubuntu-latest"
 
     steps:
@@ -22,9 +22,9 @@ jobs:
         id: uuid
         run: echo "UUID=$(uuidgen)" >> $GITHUB_OUTPUT 
 
-      - name: "Create Release" 
-        uses: "marvinpinto/action-automatic-releases@latest"
-          with:
+       
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             automatic_release_tag: "${{steps.uuid.outputs.UUID}}"
             prerelease: false
