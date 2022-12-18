@@ -11,18 +11,19 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
+      - name: "Build"
+        run: echo "THIS IS THE README" >> README.md && echo "some text" >> sample.txt 
       - name: "Get Version"
         id: version
         run: |
-          echo "VERSION=$(date +"%H%M%S")" >> $GITHUB_OUTPUT
+          echo "VERSION=$(date +"%Y/%m/%d-(%H%M%S)")" >> $GITHUB_OUTPUT
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{steps.version.outputs.VERSION}}"
           prerelease: true
-          title: "{{steps.version.outputs.VERSION}}"
+          title: "${{steps.version.outputs.VERSION}}"
           files: |
             README.md
             *.txt
