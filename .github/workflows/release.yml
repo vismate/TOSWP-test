@@ -16,13 +16,11 @@ jobs:
       
       - name: "Get Version"
         id: version
-        run: |
-          echo "VERSION=$(date +"%Y/%m/%d (%H:%M:%S)")" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(date +"%Y/%m/%d (%H:%M:%S)")" >> $GITHUB_OUTPUT
       
       - name: "Get uuid"
         id: uuid
-        run: |
-          evho "UUID=$(uuidgen)" >> $GITHUB_OUTPUT 
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_OUTPUT 
 
       - name: "Create Release" 
         uses: "marvinpinto/action-automatic-releases@latest"
