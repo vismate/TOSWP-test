@@ -16,12 +16,12 @@ jobs:
       - name: "Get Version"
         id: version
         run: |
-          echo "VERSION=$(date +"%Y/%m/%d-(%H%M%S)")" >> $GITHUB_OUTPUT
+          echo "VERSION=$(date +"%Y/%m/%d-(%H:%M:%S)")" >> $GITHUB_OUTPUT
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{steps.version.VERSION}}"
           prerelease: false
           title: "${{steps.version.outputs.VERSION}}"
           files: |
