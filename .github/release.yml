@@ -1,0 +1,28 @@
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      # ...
+      - name: "Get Version"
+        id: version
+        run: |
+          echo "VERSION=Auto release: $(date +"%Y/%m/%d - (%H%M%S)")" >> $GITHUB_OUTPUT
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{steps.version.outputs.VERSION}}"
+          prerelease: true
+          title: "{{steps.version.outputs.VERSION}}"
+          files: |
+            README.md
+            *.txt
