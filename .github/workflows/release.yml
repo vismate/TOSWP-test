@@ -15,7 +15,7 @@ jobs:
       - name: "Get Version"
         id: version
         run: |
-          echo "VERSION=Auto release: $(date +"%Y/%m/%d - (%H%M%S)")" >> $GITHUB_OUTPUT
+          echo "VERSION=Auto-release:$(date +"%Y/%m/%d-(%H%M%S)")" >> $GITHUB_OUTPUT
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
