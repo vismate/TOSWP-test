@@ -4,12 +4,23 @@ on:
   push:
     branches:
       - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:
+
+  stuff:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "stuff"
+        run: echo "hehe"
+  
   release:
     name: "Publish new release"
     runs-on: "ubuntu-latest"
-
+    if: ${{github.event_name == 'push'}} 
+    
     steps:
       - name: "Build"
         run: echo "THIS IS THE README" >> README.md && echo "some text" >> sample.txt 
