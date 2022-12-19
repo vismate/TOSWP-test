@@ -1,0 +1,46 @@
+name: "release"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+
+  stuff:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "stuff"
+        run: echo "hehe"
+  
+  release:
+    name: "Publish new release"
+    runs-on: "ubuntu-latest"
+    if: ${{github.event_name == 'push'}} 
+    
+    steps:
+      - name: "Build"
+        run: echo "THIS IS THE README" >> README.md && echo "some text" >> sample.txt 
+      
+      - name: "Get Version"
+        id: version
+        run: | 
+          echo "VERSION=Automatic release: $(date +"%Y/%m/%d %H:%M:%S")" >> $GITHUB_OUTPUT
+      
+      - name: "Get uuid"
+        id: uuid
+        run: echo "UUID=$(uuidgen)" >> $GITHUB_OUTPUT 
+
+       
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: "${{steps.uuid.outputs.UUID}}"
+            prerelease: false
+            title: "${{steps.version.outputs.VERSION}}"
+            files: |
+              README.md
+              *.txt
